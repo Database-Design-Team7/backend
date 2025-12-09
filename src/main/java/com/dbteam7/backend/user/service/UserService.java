@@ -5,13 +5,16 @@ import com.dbteam7.backend.user.dto.LoginRequest;
 import com.dbteam7.backend.user.dto.LoginResponse;
 import com.dbteam7.backend.user.dto.SignupRequest;
 import com.dbteam7.backend.user.dto.SignupResponse;
+import com.dbteam7.backend.user.dto.UserDetailResponse;
 import com.dbteam7.backend.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -71,6 +74,23 @@ public class UserService {
         response.setMessage("로그인에 성공했습니다.");
 
         return response;
+    }
+
+    public List<UserDetailResponse> getAllUsers() {
+        // 전체 사용자 조회
+        List<User> users = userRepository.findAll();
+
+        // User 엔티티를 UserDetailResponse로 변환
+        return users.stream()
+                .map(user -> {
+                    UserDetailResponse response = new UserDetailResponse();
+                    response.setUserId(user.getUserId());
+                    response.setUserName(user.getUserName());
+                    response.setMail(user.getMail());
+                    response.setPenalty(user.getPenalty());
+                    return response;
+                })
+                .collect(Collectors.toList());
     }
 
     private String generateUserId() {
