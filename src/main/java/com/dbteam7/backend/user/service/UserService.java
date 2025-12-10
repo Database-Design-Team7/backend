@@ -93,6 +93,26 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    public UserDetailResponse getUserById(String userId) {
+        // 사용자 ID로 조회
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        if (userOptional.isEmpty()) {
+            throw new IllegalArgumentException("사용자를 찾을 수 없습니다.");
+        }
+
+        User user = userOptional.get();
+
+        // UserDetailResponse로 변환
+        UserDetailResponse response = new UserDetailResponse();
+        response.setUserId(user.getUserId());
+        response.setUserName(user.getUserName());
+        response.setMail(user.getMail());
+        response.setPenalty(user.getPenalty());
+
+        return response;
+    }
+
     private String generateUserId() {
         return "USER_" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
     }

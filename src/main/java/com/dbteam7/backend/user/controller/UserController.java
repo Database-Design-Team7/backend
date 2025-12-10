@@ -64,6 +64,20 @@ public class UserController {
         }
     }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getUserById(@PathVariable String userId) {
+        try {
+            UserDetailResponse user = userService.getUserById(userId);
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponse(e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ErrorResponse("사용자 조회 중 오류가 발생했습니다."));
+        }
+    }
+
     // 에러 응답을 위한 record
     private record ErrorResponse(String message) {
     }
