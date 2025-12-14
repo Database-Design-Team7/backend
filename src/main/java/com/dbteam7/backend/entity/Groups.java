@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "group")
+@Table(name = "groups")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Group {
+public class Groups {
     @Id
     @Column(name = "group_id", length = 45)
     private String groupId;
@@ -31,13 +31,13 @@ public class Group {
     @JoinColumn(name = "leader_id")
     private User leader;
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "groups", cascade = CascadeType.ALL)
     private List<UserGroup> userGroups = new ArrayList<>();
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "groups", cascade = CascadeType.ALL)
     private List<GroupRole> groupRoles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "groups", cascade = CascadeType.ALL)
     private List<Event> events = new ArrayList<>();
 }
 

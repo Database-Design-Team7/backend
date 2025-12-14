@@ -1,10 +1,7 @@
 package com.dbteam7.backend.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,5 +35,20 @@ public class Facility {
 
     @OneToMany(mappedBy = "facility", cascade = CascadeType.ALL)
     private List<Event> events = new ArrayList<>();
+
+    @Builder
+    public Facility(String facilityId, Branch branch, String facilityName, Integer capacity) {
+        this.facilityId = facilityId;
+        this.branch = branch;
+        this.facilityName = facilityName;
+        this.capacity = capacity;
+    }
+
+    // 정보 수정 메서드 (PATCH)
+    public void update(String facilityName, Integer capacity) {
+        if (facilityName != null) this.facilityName = facilityName;
+        if (capacity != null) this.capacity = capacity;
+    }
+
 }
 

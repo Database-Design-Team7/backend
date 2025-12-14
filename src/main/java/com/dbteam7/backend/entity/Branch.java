@@ -35,7 +35,7 @@ public class Branch {
     private String chargeRate; // 요금 정책
 
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
-    private List<Group> groups = new ArrayList<>();
+    private List<Groups> groups = new ArrayList<>();
 
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
     private List<Facility> facilities = new ArrayList<>();

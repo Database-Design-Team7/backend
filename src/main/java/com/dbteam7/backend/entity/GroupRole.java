@@ -22,7 +22,7 @@ public class GroupRole {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
-    private Group group;
+    private Groups groups;
 
     @Column(name = "role_name", length = 45)
     private String roleName;
