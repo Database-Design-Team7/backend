@@ -1,10 +1,7 @@
 package com.dbteam7.backend.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,5 +29,20 @@ public class Equipment {
 
     @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL)
     private List<Maintenance> maintenances = new ArrayList<>();
+
+    @Builder
+    public Equipment(String equipmentId, Facility facility, String type, String status) {
+        this.equipmentId = equipmentId;
+        this.facility = facility;
+        this.type = type;
+        this.status = status;
+    }
+
+    // 상태 변경 메서드 (PATCH)
+    public void updateStatus(String status) {
+        if (status != null) {
+            this.status = status;
+        }
+    }
 }
 
