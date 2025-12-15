@@ -6,6 +6,8 @@ import com.dbteam7.backend.user.dto.SignupRequest;
 import com.dbteam7.backend.user.dto.SignupResponse;
 import com.dbteam7.backend.user.dto.UserDetailResponse;
 import com.dbteam7.backend.user.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
+@Tag(name = "User Management", description = "사용자 관리 API")
 public class UserController {
 
     private final UserService userService;
@@ -26,6 +29,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
+    @Operation(summary = "회원 가입", description = "이름, 이메일(중복 검증)을 입력하여 회원가입합니다.")
     public ResponseEntity<?> signup(@Valid @RequestBody SignupRequest request) {
         try {
             SignupResponse response = userService.signup(request);
@@ -40,6 +44,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
+    @Operation(summary = "로그인 및 인증", description = "이름, 이메일을 입력하여 로그인합니다.")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         try {
             LoginResponse response = userService.login(request);
@@ -54,6 +59,7 @@ public class UserController {
     }
 
     @GetMapping
+    @Operation(summary = "사용자 목록 조회 (관리자)", description = "시스템에 등록된 전체 사용자 목록 및 상세 정보를 조회합니다.")
     public ResponseEntity<?> getAllUsers() {
         try {
             List<UserDetailResponse> users = userService.getAllUsers();
@@ -65,6 +71,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
+    @Operation(summary = "사용자 상세 조회", description = "특정 사용자의 상세 정보를 조회합니다.")
     public ResponseEntity<?> getUserById(@PathVariable String userId) {
         try {
             UserDetailResponse user = userService.getUserById(userId);
